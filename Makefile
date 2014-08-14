@@ -20,7 +20,7 @@ CONFIGBYTE= ./ocpwe-config.byte
 JSFLAGS= -pretty -noinline
 JSINCLUDES= -I $(DIR_TOPLEVEL)/cmicomp -I $(COMPILER_LIBS) -I $(JS_COMPILER_LIBS) -I $(JS_OF_OCAML)
 
-all: server editor html # ocamlc toplevel
+all: server editor html
 
 html: www/index.html
 
@@ -62,24 +62,24 @@ www/index.html: $(HTML_FILES)
 
 ### Rules to build the toplevel
 
-toplevel:  
-	ocp-build build $(PKG_TOPLEVEL)	
-	$(MAKE) toplevel-js
+# toplevel:  
+# 	ocp-build build $(PKG_TOPLEVEL)	
+# 	$(MAKE) toplevel-js
 
-toplevel-js: www/toplevel.js
+# toplevel-js: www/toplevel.js
 
-www/toplevel.js: toplevel_expunged.byte
-	js_of_ocaml $(JSFLAGS) -toplevel $(JSINCLUDES) \
-	   -o www/toplevel.js \
-	   -I _obuild/$(PKG_TOPLEVEL) \
-	   $(DIR_TOPLEVEL)/toplevel_runtime.js $(JS_OF_OCAML)/weak.js \
-	   $(DIR_TOPLEVEL)/stdout.js toplevel_expunged.byte
+# www/toplevel.js: toplevel_expunged.byte
+# 	js_of_ocaml $(JSFLAGS) -toplevel $(JSINCLUDES) \
+# 	   -o www/toplevel.js \
+# 	   -I _obuild/$(PKG_TOPLEVEL) \
+# 	   $(DIR_TOPLEVEL)/toplevel_runtime.js $(JS_OF_OCAML)/weak.js \
+# 	   $(DIR_TOPLEVEL)/stdout.js toplevel_expunged.byte
 
-toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
-	ls -l $(TOPLEVEL).byte
-	`ocamlc -where`/expunge $(TOPLEVEL).byte toplevel_expunged.byte \
-		`cat modules.list`
-	ls -l toplevel_expunged.byte
+# toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
+# 	ls -l $(TOPLEVEL).byte
+# 	`ocamlc -where`/expunge $(TOPLEVEL).byte toplevel_expunged.byte \
+# 		`cat modules.list`
+# 	ls -l toplevel_expunged.byte
 
 ### Rules to build the server
 server:
@@ -99,9 +99,9 @@ www/main.js: $(MAIN).byte
 
 ### Rules to build ocamlc
 
-ocamlc:
-	$(MAKE) -C $(DIR_OCAMLC)
-	cp $(DIR_OCAMLC)/ocamlc.js www/ocamlc.js
+# ocamlc:
+# 	$(MAKE) -C $(DIR_OCAMLC)
+# 	cp $(DIR_OCAMLC)/ocamlc.js www/ocamlc.js
 
 $(CONFIGBYTE):
 	$(MAKE) -C build
@@ -136,7 +136,7 @@ rebuild:
 clean:
 	ocp-build clean
 	rm -f ocpwe-config.byte .ocp-we.conf
-	rm -rf www/main.js www/ocamlc.js www/toplevel.js
+	rm -rf www/main.js
 	$(MAKE) -C $(DIR_OCAMLC) clean
 	$(MAKE) -C server clean
 	$(MAKE) -C build clean
