@@ -1,0 +1,9 @@
+*.cm[aiot]
+*.cmti
+*.annot
+*~
+.depend
+ocamlc.byte
+ocamlc.js
+progmagic.byte
+stdlib_cma.js

@@ -1,0 +1,10 @@
+*.cm[aiot]
+*.cmti
+*.annot
+main.js
+main.byte
+*~
+errors_lexer.ml
+
+# On exclut les sous-dossiers
+!*/*

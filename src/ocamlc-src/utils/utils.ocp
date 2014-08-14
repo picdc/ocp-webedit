@@ -1,0 +1,16 @@
+begin library "utils"
+  has_asm = false
+  sort = true
+  nostdlib = true
+  bytecomp = ["-nostdlib"]
+  bytelink = ["-nostdlib"]
+  files = [ "ccomp.ml"
+            "clflags.ml"
+            "config.ml"
+            "consistbl.ml"
+            "misc.ml"
+            "tbl.ml"
+            "terminfo.ml"
+            "warnings.ml" ]
+  requires = [ "my-stdlib" ]
+end

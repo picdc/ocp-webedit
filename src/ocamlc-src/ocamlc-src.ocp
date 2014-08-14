@@ -1,0 +1,38 @@
+
+begin
+  generated = true
+  dirname = [ "%{js_of_ocaml.syntax_SRC_DIR}%" ]
+
+  begin objects "js_of_ocaml.camlp4-syntax.objects"
+    files = [ "pa_js.ml" ]
+  end
+
+  begin syntax "js_of_ocaml.camlp4-syntax"
+    requires = [ "js_of_ocaml.camlp4-syntax.objects" "camlp4o" ]
+  end
+end
+
+begin program "ocamlc-src"
+  has_asm = false
+(*  nopervasives = true *)
+  sort = true
+  bytecomp = ["-nostdlib"]
+  bytelink = ["-nostdlib"  "-nopervasives"]
+  files = [ "compile.ml"
+            "errors.ml"
+            "main_args.ml"
+            "pparse.ml"
+            "main.ml" (syntax="js_of_ocaml.camlp4-syntax")
+            "stdlib/std_exit.ml"
+          ]
+  link_order = [
+    "my-stdlib"
+   "lwt" "js_of_ocaml" "utils" "parsing" "typing" "bytecomp"
+  ]
+  requires = [
+    "my-stdlib" "lwt" "js_of_ocaml"
+    "utils" "parsing" "typing" "bytecomp"   "bytecomp"
+    "js_of_ocaml.camlp4-syntax"
+  ]
+
+end

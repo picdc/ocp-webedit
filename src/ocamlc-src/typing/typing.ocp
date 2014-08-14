@@ -1,0 +1,37 @@
+begin library "typing"
+  has_asm = false
+  sort = true
+  nostdlib = true
+  bytecomp = ["-nostdlib"]
+  bytelink = ["-nostdlib"]
+  files = [ "annot.mli"
+            "btype.ml"
+            "cmi_format.ml"
+            "cmt_format.ml"
+            "ctype.ml"
+            "datarepr.ml"
+            "env.ml"
+            "ident.ml"
+            "includeclass.ml"
+            "includecore.ml"
+            "includemod.ml"
+            "mtype.ml"
+            "outcometree.mli"
+            "oprint.ml"
+            "parmatch.ml"
+            "path.ml"
+            "predef.ml"
+            "primitive.ml"
+            "printtyped.ml"
+            "printtyp.ml"
+            "stypes.ml"
+            "subst.ml"
+            "typeclass.ml"
+            "typecore.ml"
+            "typedecl.ml"
+            "typedtree.ml"
+            "typemod.ml"
+            "types.ml"
+            "typetexp.ml" ]
+  requires = [ "my-stdlib" "utils" "parsing" ]
+end

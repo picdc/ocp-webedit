@@ -1,0 +1,11 @@
+
+begin library "autocomplete-src"
+
+  has_asm = false
+  files = [ "completion_data.ml"
+            "completion_lexer.mll"
+            "autocomplete.ml"
+          ]
+  requires = [ "re" "re.str" ]
+
+end

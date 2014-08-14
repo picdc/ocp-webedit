@@ -1,0 +1,40 @@
+
+begin program "main-src"
+
+  has_asm = false
+  files = [
+    "javaScript.ml"
+    "jQuery.ml"
+
+    "config.ml"
+            "webworker.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "ace.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "global.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "myutils.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "completion_js.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "myparser.ml"
+            "request.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "mycompile.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "filemanager.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "errors_lexer.mll"
+            "errors_format.mli"
+            "eventmanager.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "widget.ml"
+            "errors_report.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "dialog.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "toolbar.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "tabs.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "persona.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "menu.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "sidepanel.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "mytoplevel.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "content.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "login.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "indent.ml" (syntax = "js_of_ocaml.camlp4-syntax")
+            "main.ml" (syntax = "js_of_ocaml.camlp4-syntax")]
+  requires = [ "js_of_ocaml"
+               "js_of_ocaml.camlp4-syntax"
+               "autocomplete-src"
+               "my-ocp-indent" "common" "sha"]
+
+end

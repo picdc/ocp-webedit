@@ -1,0 +1,9 @@
+
+let offline_mode = @OFFLINE_MODE@  (* true/false *)
+let server_name = "@SERVER_NAME@"  (* localhost:4444 or edit.ocamlpro.com *)
+let data_directory = "@DATA_DIRECTORY@" (* data/ directory for user accounts *)
+let redir = "@REDIR_PREFIX@"       (* "" or "api" *)
+let internal_port = @INTERNAL_PORT@  (* 4444 *)
+let www_directory = "@WWW_DIRECTORY@" (* .../www containing index.html *)
+let hostname = "@HOSTNAME@"          (* localhost *)
+let root_directory = "@ROOT_DIRECTORY@"

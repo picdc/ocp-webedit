@@ -1,0 +1,43 @@
+<div id="output" style="border: 1px dashed pink"></div><br /><br />
+
+
+<script src="FileSaver.js"></script>
+<script src="ocamlc.js"></script>
+<script>
+  caml_global_filesystem["camlheader"] = new MlString("");
+  caml_global_filesystem["toto.ml"] = new MlString("let _ = print_endline \"Coucou\"");
+  var pouetbefore = caml_global_data.interfaces["std_exit.cmi"];
+  <!-- var d = document.getElementById("res_toto.cmi"); -->
+  <!-- d.innerHTML = pouetbefore; -->
+
+  <!-- caml_global_data.interfaces["std_exit.cmi"] = undefined; -->
+  <!-- try { -->
+    <!-- this.mycompile(new MlString("toto.ml")); -->
+    <!-- console.debug("IT'S COMPILING"); -->
+<!-- } -->
+  <!-- catch (err) { -->
+  <!--   console.debug(err.toString()); -->
+  <!-- mlstrdebug(new MlString(pouetbefore)); -->
+  <!-- mlstrdebug(caml_global_filesystem["std_exit.cmi"]); -->
+  <!-- var b = (caml_global_filesystem["std_exit.cmi"].toBytes() == pouetbefore); -->
+  <!-- console.log("Resultat : "+b); -->
+  <!-- } -->
+</script>
+
+<script>
+var toto_cmo = "Caml1999O007\\000\\000\\000\\028:\\000\\000\\0009\\000\\000\\000\\000\\000\\000\\000\\132\\149\\166\\190\\000\\000\\000N\\000\\000\\000\\013\\000\\000\\0005\\000\\000\\000/\\008\\000\\000$\\000$TotoPL\\160\\160\\146\\176@\\004\\005AH@\\160\\160\\004\\0070\\133\\152\\0056\\164Sz\\222\\207I\\149\\160\\192*\\167\\138\\160\\160*Pervasives0H6\\194T\\240\\234\\202\\217/\\191g\\171\\197%\\253\\218@@@@@"
+
+var toto_cmi =
+"Caml1999I014\\132\\149\\166\\190\\000\\000\\000\\007\\000\\000\\000\\002\\000\\000\\000\\006\\000\\000\\000\\005\\160$Toto@\\132\\149\\166\\190\\000\\000\\0007\\000\\000\\000\\008\\000\\000\\000\\031\\000\\000\\000\\025\\160\\160$Toto0\\133\\152\\0056\\164Sz\\222\\207I\\149\\160\\192*\\167\\138\\160\\160*Pervasives0H6\\194T\\240\\234\\202\\217/\\191g\\171\\197%\\253\\218@\\132\\149\\166\\190\\000\\000\\000\\001\\000\\000\\000\\000\\000\\000\\000\\000\\000\\000\\000\\000@";
+
+<!-- mlstrdebug(new MlString(toto_cmi)); -->
+<!-- mlstrdebug(caml_global_filesystem["toto.cmi"]); -->
+
+<!-- mlstrdebug(new MlString(toto_cmo)); -->
+<!-- mlstrdebug(caml_global_filesystem["toto.cmo"]); -->
+
+<!-- var cmo_blob = MlstringToBlob(caml_global_filesystem["toto.cmo"]); -->
+<!-- <\!-- saveAs(cmo_blob, "toto.cmo") -\->; -->
+<!-- var byte_blob = MlstringToBlob(caml_global_filesystem["toto.byte"]); -->
+
+</script>

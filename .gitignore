@@ -1,0 +1,5 @@
+_obuild/
+TODO*
+*.log
+*.status
+ocp-build.root*
