@@ -25,7 +25,6 @@ begin program "server"
                "netstring"
                "netsys"
 	             "sqlite3"
-               "ocplib-webedit-admin"
              ]
 
 end

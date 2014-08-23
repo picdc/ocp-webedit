@@ -1458,8 +1458,8 @@ module Login (Callback: sig
     button##onclick <- handler (fun _ ->
       let username = Js.to_string username##value in
       let psw = string_to_sha1 (Js.to_string psw##value) in
-      let failmsg = "Please check your login email address and password.\n
-                     If you don't have an account, signup first." in
+      (* let failmsg = "Please check your login email address and password.\n
+                     If you don't have an account, signup first." in *)
         check_no_empty "email" username;
         check_no_empty "password" psw;
         let success str = hide (); success str in

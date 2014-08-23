@@ -12,7 +12,7 @@ DIR_MAIN= src/main-src
 
 MAIN= _obuild/$(PKG_MAIN)/$(PKG_MAIN)
 # OCAMLC= _obuild/$(PKG_OCAMLC)/$(PKG_OCAMLC)
-# TOPLEVEL= _obuild/$(PKG_TOPLEVEL)/$(PKG_TOPLEVEL)
+TOPLEVEL= _obuild/$(PKG_TOPLEVEL)/$(PKG_TOPLEVEL)
 
 
 CONFIGBYTE= ./ocpwe-config.byte
@@ -62,24 +62,24 @@ www/index.html: $(HTML_FILES)
 
 ### Rules to build the toplevel
 
-# toplevel:  
-# 	ocp-build build $(PKG_TOPLEVEL)	
-# 	$(MAKE) toplevel-js
+toplevel:  
+	ocp-build build $(PKG_TOPLEVEL)	
+	$(MAKE) toplevel-js
 
-# toplevel-js: www/toplevel.js
+toplevel-js: www/toplevel.js
 
-# www/toplevel.js: toplevel_expunged.byte
-# 	js_of_ocaml $(JSFLAGS) -toplevel $(JSINCLUDES) \
-# 	   -o www/toplevel.js \
-# 	   -I _obuild/$(PKG_TOPLEVEL) \
-# 	   $(DIR_TOPLEVEL)/toplevel_runtime.js $(JS_OF_OCAML)/weak.js \
-# 	   $(DIR_TOPLEVEL)/stdout.js toplevel_expunged.byte
+www/toplevel.js: toplevel_expunged.byte
+	js_of_ocaml $(JSFLAGS) -toplevel $(JSINCLUDES) \
+	   -o www/toplevel.js \
+	   -I _obuild/$(PKG_TOPLEVEL) \
+	   $(DIR_TOPLEVEL)/toplevel_runtime.js $(JS_OF_OCAML)/weak.js \
+	   $(DIR_TOPLEVEL)/stdout.js toplevel_expunged.byte
 
-# toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
-# 	ls -l $(TOPLEVEL).byte
-# 	`ocamlc -where`/expunge $(TOPLEVEL).byte toplevel_expunged.byte \
-# 		`cat modules.list`
-# 	ls -l toplevel_expunged.byte
+toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
+	ls -l $(TOPLEVEL).byte
+	`ocamlc -where`/expunge $(TOPLEVEL).byte toplevel_expunged.byte \
+		`cat modules.list`
+	ls -l toplevel_expunged.byte
 
 ### Rules to build the server
 server:
