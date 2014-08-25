@@ -141,8 +141,23 @@ let user_change_psw email psw_old psw_new =
 	        with Error s -> prerr_endline s in
 	  assert(db_close db)
 
-let user_identify email password =
-	user_change_psw email password password
+let user_identify email password_sha =
+	let username = email_to_dirname email in
+(* 	let psw_old_sha = Sha1.to_hex(Sha1.string psw_old) in
+	let psw_new_sha = Sha1.to_hex(Sha1.string psw_new) in *)
+	let _ = Unix.chdir data_directory in
+	let db = db_open ~mode:`NO_CREATE "user_data" in
+	let sql = Format.sprintf "UPDATE users SET password = \'%s\'
+	                          WHERE username = \'%s\' and password = \'%s\'"
+	          password_sha username password_sha in
+	let _ = try let return_code = exec db sql in
+	            match return_code with
+	             | Rc.OK -> if changes db <> 1 then
+	                        	raise (SELECT_USER_FAIL (email, password_sha))
+	             | r -> prerr_endline (Rc.to_string r);
+	                    prerr_endline (errmsg db)
+	        with Error s -> prerr_endline s in
+	  assert(db_close db)
 
 let user_list () =
 	()

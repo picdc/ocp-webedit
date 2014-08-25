@@ -5,7 +5,7 @@ CAMLFLAGS= -thread -w @a-29 $(INCLUDES)
 CAMLOPTFLAGS= $(CAMLFLAGS) -inline 10000
 CAMLLIBS= unix.cma
 CFLAGS= -arch x86_64 -O3 -Wall -Wextra
-PKGS= -package threads,pcre,netplex,netcgi2,nethttpd,shell,netclient,ssl,equeue-ssl,yojson,netstring,sqlite3,sha
+PKGS= -package threads,pcre,netplex,netcgi2,nethttpd,shell,netclient,ssl,equeue-ssl,yojson,netstring,sqlite3,sha,admin
 
 SRC= serverConfig.ml serverMain.ml
 OBJ= $(SRC:.ml=.cmx)

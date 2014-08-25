@@ -25,6 +25,8 @@ begin program "server"
                "netstring"
                "netsys"
 	             "sqlite3"
+               "sha"
+               "admin"
              ]
 
 end

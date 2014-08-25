@@ -472,8 +472,11 @@ let parse_persona_response r =
 let login_function email password =
   let identified = ref true in
   let _ =
-    try log ("login_function" ^ password)(* AdminLib.change_password email password password *)
-    with Failure _ -> identified := false in
+    try Admintool.user_identify email password 
+    with Admintool.SELECT_USER_FAIL (email, psw_sha) -> begin
+      identified := false;
+      log ("select fail detected: " ^ email ^ " " ^ psw_sha)
+    end in
   if !identified && not (user_exists email) then create_workspace email;
   !identified
 
@@ -735,7 +738,7 @@ let project_compile_function path obj user_agent =
       let grun_path = infer_grun user_agent in
       let grun = open_in_bin grun_path in
       let grun_len = 
-        if (Filename.basename grun_path) = "ocamlgrun" then 0 else in_channel_length grun in
+        if (* (Filename.basename grun_path) = "ocamlgrun" *)true then 0 else in_channel_length grun in
 
       let bytecode_path = path / "_obuild" / (Filename.chop_extension obj) / obj in
       let bytecode = open_in_bin bytecode_path in 
@@ -757,8 +760,8 @@ let project_compile_function path obj user_agent =
           my_encode res
 
 let load_library_function () =
-  let in_file = Filename.concat root_directory "server_conf_lib" in
-  let _ = if not (Sys.file_exists in_file) then log "load_library_function"(* AdminLib.build_server_config () *) in
+  let in_file = Filename.concat root_directory "webedit.conf" in
+  (* let _ = if not (Sys.file_exists in_file) then (* AdminLib.build_server_config () *) in *)
   let inc = open_in in_file in
   let len = in_channel_length inc in
   let buf = Buffer.create 128 in

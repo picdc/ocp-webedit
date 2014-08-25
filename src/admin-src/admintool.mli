@@ -1,3 +1,5 @@
+exception SELECT_USER_FAIL of string * string
+
 val db_initial: unit -> unit
 
 val user_create: string -> string -> ?name:string -> unit -> unit
