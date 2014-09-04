@@ -165,7 +165,7 @@ let print_token output block tok usr =
       | STRING _ ->
           (match String.trim text with
            | "\"" | "\"\\" -> None
-           | _ -> Some 1 (* length of '"' *))
+           | _ -> Some 1) (* length of """" *)
       | COMMENT ->
           (match String.trim text with
            | "(*" when not output.config.IndentConfig.i_strict_comments -> None
