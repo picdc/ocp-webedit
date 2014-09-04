@@ -1,0 +1,21 @@
+begin
+  generated = true
+
+  begin library "try-toplevellib"
+    has_asm = false
+    dirname = [ "src/toplevel-src/toplevellib-4.00.1" ]
+    archive = "ocamltoplevel"
+    requires = [ "ocamlbytecomp" ]
+  end
+
+end
+
+begin program "toplevel-src"
+  has_asm = false
+  files = [ "toplevelw.ml" (syntax="js_of_ocaml.camlp4-syntax") ]
+  requires = [ "try-toplevellib"
+               "js_of_ocaml"
+               "js_of_ocaml.compiler"
+(*               "js_of_ocaml_compiler-libs" *)
+               "js_of_ocaml.camlp4-syntax" ]
+end

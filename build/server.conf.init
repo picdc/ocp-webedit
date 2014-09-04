@@ -1,0 +1,176 @@
+netplex {
+  controller {
+    max_level="debug";   
+    logging {
+      type="stderr";
+    }
+  };
+  service {
+    name="ace-edit_service";
+    protocol {
+      name="ace-edit_protocol";
+      address {
+        type="internet";
+	bind="0.0.0.0:4444";
+      };
+    };
+    processor {
+      type="ace-edit_processor";
+      timeout=300.0;
+      timeout_next_request=15.0;
+      access_log="enabled";
+      suppress_broken_pipe=true;
+      host {
+        pref_name = "VAR_SERVER_NAME";
+        pref_port = VAR_PREF_PORT;
+        names="*:0";
+	uri {
+	  path="/";
+	  service {
+	    type="file";
+	    docroot="VAR_DOCROOT";
+	    media_types_file="/etc/mime.types";
+	    default_media_type="text/html";
+	    enable_gzip=true;
+	    index_files="index.html";
+	    enable_listings=true;
+	  };
+	};
+	uri {
+	  path="/login";
+	  service {
+	    type="dynamic";
+	    handler="login_service";
+	  };
+	};
+	uri {
+	  path="/logout";
+	  service {
+	    type="dynamic";
+	    handler="logout_service";
+	  };
+	};
+	uri {
+	  path="/project";
+	  service {
+	    type="dynamic";
+	    handler="project_service";
+	  };
+	};
+	uri {
+	  path="/project/load";
+	  service {
+	    type="dynamic";
+	    handler="project_load_service";
+	  };
+	};
+	uri {
+	  path="/create";
+	  service {
+	    type="dynamic";
+	    handler="create_service";
+	  };
+	};
+	uri {
+	  path="/createdir";
+	  service {
+	    type="dynamic";
+	    handler="createdir_service";
+	  };
+	};
+	uri {
+	  path="/project/create";
+	  service {
+	    type="dynamic";
+	    handler="project_create_service";
+	  };
+	};
+	uri {
+	  path="/project/save";
+	    service {
+	      type="dynamic";
+	      handler="project_save_service";
+	  };
+	};
+        uri {
+	  path="/project/rename";
+	    service {
+	      type="dynamic";
+	      handler="project_rename_service";
+	  };
+	};
+	uri {
+	  path="/project/import";
+	    service {
+	      type="dynamic";
+	      handler="project_import_service";
+	  };
+	};
+	uri {
+	  path="/rename";
+	    service {
+	      type="dynamic";
+	      handler="rename_service";
+	  };
+	};
+	uri {
+	  path="/project/delete";
+	    service {
+	      type="dynamic";
+	      handler="project_delete_service";
+	  };
+	};
+	uri {
+	  path="/delete";
+	    service {
+	      type="dynamic";
+	      handler="delete_service";
+	  };
+	};
+        uri {
+	  path="/import";
+	    service {
+	      type="dynamic";
+	      handler="import_service";
+	  };
+	};
+	
+	uri {
+	  path="/export";
+	    service {
+	      type="dynamic";
+	      handler="export_service";
+	  };
+	};
+	uri {
+	  path="/conf/save";
+	    service {
+	      type="dynamic";
+	      handler="save_conf_service";
+	  };
+	};
+	uri {
+	  path="/conf/load";
+	    service {
+	      type="dynamic";
+	      handler="load_conf_service";
+	  };
+	};
+	uri {
+	  path="/project/compile";
+	    service {
+	      type="dynamic";
+	      handler="project_compile_service";
+	  };
+	};
+      };
+    };
+    workload_manager {
+      type="dynamic";
+      max_jobs_per_thread = 1;
+      min_free_jobs_capacity = 2;
+      max_free_jobs_capacity = 5;
+      max_threads = 50;
+    };
+  };
+}

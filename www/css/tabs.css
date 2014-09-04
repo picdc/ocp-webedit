@@ -1,0 +1,71 @@
+
+input:disabled {
+    opacity: 0.5; }
+
+#tabs {
+    width: 100%;
+    height: 28px;
+    border: 1px solid #aaaaaa;
+    padding-left: 10px; }
+#tabs_line {
+    height: 28px; }
+#tabs_table {
+    border-collapse: collapse; }
+#tabs_scleft {
+    float: left; }
+#tabs_scright {
+    float: right; }
+#tabs_showall {
+    float: right; }
+
+
+.tabs {
+    overflow: hidden;
+    font-size: 10pt;
+    border: 1px solid #aaaaaa;
+    border-top: none; }
+.tabs:hover {
+    background-color: #eeeeee; }
+.tabs_widget {
+    display: inline-block; }
+.tabs_title {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 76px;
+    border: none;
+    font-weight: inherit; 
+    background-color: inherit; }
+.tabs_close {
+    display: inline-block;
+    min-width: 20px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px inset #aaaaaa;
+    border-radius: 8px 8px;
+    background-color: inherit; }
+.tabs_close:hover {
+    color: red; }
+.tabs_active {
+    border-bottom: 1px solid #ffffff;
+    background-color: rgb(232, 242, 254); }
+.tabs_unsaved {
+    font-weight: bold; }
+
+
+#hiddentabs {
+    background-color: #FFFFFF;
+    border: 3px double black; }
+#hiddentabs_list {
+    list-style: none;
+    font-size: 10pt;
+    padding: 10px;
+    margin: 0px; }
+.hiddentabs { }
+.hiddentabs:hover {
+    background-color: #DDDDDD }
+.hiddentabs_active {
+    font-weight: bold; }
+.hiddentabs_unsaved:after {
+    content: "*"; }
+    

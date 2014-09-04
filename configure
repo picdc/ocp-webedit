@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd config; ./configure $*
+cd ..
+echo Creating root directory _obuild/
+mkdir -p _obuild

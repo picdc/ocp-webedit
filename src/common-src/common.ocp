@@ -1,0 +1,4 @@
+
+begin library "common"
+  files = [ "commonConfig.ml" "commonMisc.ml" ]
+end

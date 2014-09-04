@@ -1,0 +1,15 @@
+begin library "bytecomp"
+  has_asm = false
+  sort = true
+  nostdlib = true
+  bytecomp = ["-nostdlib"]
+  bytelink = ["-nostdlib"]
+  files = [ "bytegen.ml" "bytelibrarian.ml" "bytelink.ml"
+           "bytepackager.ml" "bytesections.ml" "cmo_format.mli"
+           "dll.ml" "emitcode.ml" "instruct.ml" "lambda.ml" "matching.ml"
+           "meta.ml" "opcodes.ml" "printinstr.ml" "printlambda.ml"
+           "runtimedef.ml" "simplif.ml" "switch.ml" "symtable.ml"
+           "translclass.ml" "translcore.ml" "translmod.ml"
+           "translobj.ml" "typeopt.ml" "bytecomp_common.ml" ]
+  requires = [ "my-stdlib" "utils" "parsing" "typing" ]
+end

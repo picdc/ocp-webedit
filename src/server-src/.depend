@@ -1,0 +1,4 @@
+serverConfig.cmo :
+serverConfig.cmx :
+serverMain.cmo : serverConfig.cmo
+serverMain.cmx : serverConfig.cmx

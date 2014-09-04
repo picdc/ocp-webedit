@@ -1,0 +1,42 @@
+<div class="modal fade" id="modal-create-new-interface" tabindex="-1" role="dialog" aria-labelledby="modal-create-new-interface-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create New Interface</h4>
+        </div>
+        <div class="modal-body">
+
+<div class="input-group">
+<span class="input-group-addon">
+          <div class="dropdown">
+          <a  class="dropdown-toggle" href="#" data-toggle="dropdown">Project:</a>
+          <ul class="dropdown-menu" id="modal-create-new-interface-dropdown">
+          </ul>
+          </div>
+</span>
+          <input id="modal-create-new-interface-path-input"
+                 type="text" name="Path"
+                     class="form-control"
+                     placeholder="Project" />
+</div>
+ <div class="input-group">
+ <span class="input-group-addon">
+        Interface Name:
+</span>
+<input id="modal-create-new-interface-name-input"
+                 type="text" name="Name"
+                 class="form-control"
+                 placeholder="Interface" />
+</div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button"
+             id="modal-create-new-interface-button"
+             class="btn btn-primary">Create Interface</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

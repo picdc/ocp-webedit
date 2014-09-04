@@ -1,0 +1,33 @@
+
+(*
+
+begin library "netsys"
+  generated = true
+  archive = "netsys"
+  dirname = [ "/home/dmaison/.opam/4.00.1/lib/netsys" ]
+end
+
+begin program "server"
+  comp += [ ] (* "-thread" "-w" "@a" *)
+  ccopt += [ ]
+  files = [ "serverConfig.ml" "serverMain.ml" ]
+  requires = [ "threads"
+               "netsys"
+               "pcre"
+               "netplex"
+               "netcgi2"
+               "nethttpd"
+               "shell"
+               "netclient"
+               "ssl"
+               "equeue-ssl"
+               "yojson"
+               "netstring"
+               "netsys"
+	             "sqlite3"
+               "sha"
+               "admin"
+             ]
+
+end
+*)

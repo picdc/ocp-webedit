@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCaml Online IDE</title>
+    <link href="./css/tabs.css" rel="stylesheet" type="text/css" />
+    <link href="./css/mytoplevel.css" rel="stylesheet" type="text/css" />
+    <link href="./css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css" />
+    <link href="./css/for-bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="sha1.js"></script>
+    <script src="FileSaver.js"></script>
+    <script src="./ace/ace.js"></script>
+  </head>
+
+  <body>
+    <script src="bootstrap/assets/js/jquery.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+
+    <a class="sr-only" href="#content">Skip navigation</a>
+
+
+    #include "html/welcome.html"
+
+    #include "html/modals/about.html"
+    #include "html/modals/run.html"
+    #include "html/modals/create-new-project.html"
+    #include "html/modals/import-new-project.html"
+    #include "html/modals/download-project.html"
+    #include "html/modals/create-new-module.html"
+    #include "html/modals/create-new-lexer.html"
+    #include "html/modals/create-new-grammar.html"
+    #include "html/modals/import-new-file.html"
+    #include "html/modals/delete-file.html"
+    #include "html/modals/delete-project.html"
+    #include "html/modals/delete-directory.html"
+    #include "html/modals/compile-project.html"
+    #include "html/modals/compilation-settings.html"
+    #include "html/modals/create-new-interface.html"
+    #include "html/modals/copy-paste-howto.html"
+    #include "html/modals/login.html"
+    #include "html/modals/login-fail.html"
+
+    <div id="ocaml-editor">
+      <div class="container" id="editor-panel">
+	<div class="row">
+	  #include "html/static-navbar.html"
+	</div>
+	#include "html/rcdialogs.html"
+<!--
+	<div id="editor-menu" class="editor-menu">
+	  <div id="toolbar" class="toolbar"/>
+	</div>
+-->
+	<div class="row overflow-auto">
+	  <div id="sidepanel" class="col-md-3"></div>
+	  <div id="divmain" class="col-md-8">
+	    <div id="tabs"></div>
+	    <div id="editor"></div>
+	    <div id="bottabs">
+	      <div class="row">
+		<ul class="nav nav-tabs">
+		  <!-- <li id="bottabs_toplevel_title_li" class="active"><a href="#" id="bottabs_toplevel_title_a">Toplevel</a></li>
+		  <li id="bottabs_output_title_li"><a href="#"
+						      id="bottabs_output_title_a">Output</a></li> -->
+		  <li id="bottabs_compilation_title_li"><a href="#" id="bottabs_compilation_title_a">Compilation</a></li>
+		</ul>
+	      </div>
+
+	      <div class="row">
+		<div id="compilation" class="bottabs_content" style="">
+		  <pre id="compilation_output"></pre>
+		  <button id="bytecode" class="btn btn-success" disabled=true>Get compiled bytecode</button></div>
+
+		<!-- <div id="toplevel" class="bottabs_content" style=""><div id="toplvl_area"><pre id="toplvl_area_output"></pre><div id="toplvl_area_input"><div class="toplvl_prompt">#</div><textarea id="toplvl_area_input_textarea" class="toplvl_input_text" style="height: 14px;"></textarea></div></div><div id="toplvl_buttons">
+		    <button  type="button" class="btn btn-primary" id="toplvl_button_eval">Evaluate</button>
+		    <button  type="button" class="btn btn-info" id="toplvl_button_eval_select">Evaluate Selection</button>
+		    <button  type="button" class="btn btn-warning" id="toplvl_button_reset">Reset env.</button></div></div> -->
+
+		<pre id="output" class="bottabs_content" style="display: none;"></pre>
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <SCRIPT src="./load.js"></SCRIPT>
+    <SCRIPT src="./main.js"></SCRIPT>
+    <SCRIPT>
+      load("ocaml-editor");
+    </SCRIPT>
+    
+  </BODY>
+</HTML>

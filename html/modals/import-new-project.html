@@ -1,0 +1,45 @@
+<div class="modal fade" id="modal-import-new-project" tabindex="-1" role="dialog" aria-labelledby="modal-import-new-project-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Import New Project</h4>
+        </div>
+        <div class="modal-body">
+
+<div class="input-group">
+<span class="input-group-addon">
+          <div class="dropdown">
+          <a  class="dropdown-toggle" href="#" data-toggle="dropdown">Directory:</a>
+          <ul class="dropdown-menu" id="modal-import-new-project-dropdown">
+          </ul>
+          </div>
+</span>
+          <input id="modal-import-new-project-path-input"
+                 type="text" name="Path"
+                     class="form-control"
+                     placeholder="Directory" />
+</div>
+ <div class="input-group">
+ <span class="input-group-addon">
+        Archive:
+</span>
+<input id="modal-import-new-project-file-input"
+                 type="file"
+                     name="Name"
+                 class="form-control"
+                 placeholder="Archive" />
+<input type="hidden" id="modal-import-new-project-file-name" />
+<input type="hidden" id="modal-import-new-project-file-content" />
+</div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button"
+             id="modal-import-new-project-button"
+             class="btn btn-primary">Import Project</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

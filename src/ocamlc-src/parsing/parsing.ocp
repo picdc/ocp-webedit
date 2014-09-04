@@ -1,0 +1,12 @@
+begin library "parsing"
+  has_asm = false
+  sort = true
+  nostdlib = true
+  bytecomp = ["-nostdlib"]
+  files = [ "asttypes.mli" "location.ml" "parse.ml"
+            "parser.mly" "printast.mli"
+            "syntaxerr.ml" "longident.ml" "parsetree.mli"
+            "lexer.mll" "printast.ml"]
+  requires = [ "my-stdlib" "utils" ]
+
+end

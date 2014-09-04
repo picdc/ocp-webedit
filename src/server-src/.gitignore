@@ -1,0 +1,7 @@
+server.asm
+server.conf
+serverConfig.ml
+*.o
+*~
+*.cm[ix]
+depend

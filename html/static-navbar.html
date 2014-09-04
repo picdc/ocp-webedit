@@ -1,0 +1,40 @@
+      <!-- Static navbar -->
+      <div id="menu_bar" class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" target="ocamlpro" href="http://www.ocamlpro.com/">OCamlPro</a>
+          <a class="navbar-brand" href="#">Online IDE</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+
+#include "dropdowns/navbar-project.html"
+#include "dropdowns/navbar-file.html"
+#include "dropdowns/navbar-edit.html"
+#include "dropdowns/navbar-compile.html"
+#include "dropdowns/navbar-run.html"
+#include "dropdowns/navbar-help.html"
+
+
+
+
+          </ul>
+
+
+          <ul class="nav navbar-nav navbar-right">
+
+    <li><button class="btn btn-default btn-margin" id="new_module" >New ML</button></li>
+    <li><button class="btn btn-default btn-margin" id="new_interface" >New MLI</button></li>
+    <li><button class="btn btn-default btn-margin" id="switch_ml_mli" >ML/MLI</button></li>
+    <li><button class="btn btn-primary btn-margin" id="compile_button" >Compile</button></li>
+    <li><button class="btn btn-primary btn-margin" id="save_button" >Save</button></li>
+    <li><button class="btn btn-default btn-margin" id="link_before" >Move Up</button></li>
+    <li><button class="btn btn-default btn-margin" id="link_after" >Move Down</button></li>
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>

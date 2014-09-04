@@ -1,0 +1,55 @@
+
+
+begin
+
+  files = [
+  "pervasives.ml" ( nopervasives = true comp += "-nopervasives" )
+  "array.ml" "list.ml" "char.ml" "string.ml"
+  "sys.ml"
+  "sort.ml" "marshal.ml" "obj.ml"
+  "int32.ml" "nativeint.ml" "int64.ml"
+  "lexing.ml" "parsing.ml"
+  "set.ml" "map.ml" "stack.ml" "queue.ml"
+  "camlinternalLazy.ml" "lazy.ml" "stream.ml"
+  "buffer.ml" ( comp += [ "-w" "A" ])
+  "printf.ml" ( comp += [ "-w" "A" ])
+  "arg.ml" "printexc.ml" "gc.ml"
+  "digest.ml" "random.ml" "hashtbl.ml"
+  "format.ml" ( comp += [ "-w" "A" ])
+  "scanf.ml"  ( comp += [ "-w" "A" ] asmcomp += [ "-inline" "9" ])
+  "callback.ml"
+  "camlinternalOO.mli" ( nopervasives = true )
+  "camlinternalOO.ml" ( asmcomp += [ "-inline" "0" ] )
+   "oo.ml" "camlinternalMod.ml"
+  "genlex.ml" "weak.ml"
+  "filename.ml" "complex.ml"
+  begin ( comp += "-nolabels" )
+    "arrayLabels.ml" "listLabels.ml"
+    "stringLabels.ml" "moreLabels.ml"
+  end
+  "stdLabels.ml"
+  "graphics.ml"
+  ]
+
+      begin library "my-stdlib"
+      end
+
+end
+
+(*
+begin
+  files = [ "std_exit.ml" ]
+  begin objects "std_exit-boot"
+    use "boot-ocamlc"
+    files = [ files (use "boot-ocamlc") ]
+    requires = [ "stdlib-boot" ]
+  end
+
+  begin objects "std_exit"
+    use "new-ocaml"
+    files = [ files (use "new-ocaml") ]
+    requires = [ "stdlib" ]
+  end
+end
+
+*)
