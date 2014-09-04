@@ -1,14 +1,15 @@
 begin library "webedit_admin"
-	files = ["admintool.mli" "admintool.ml"]
+	files = ["admintool.mli"
+			     "admintool.ml"]
 	requires = ["sqlite3" "unix" "sha" "str"]
-end
-
-begin program "test"
-	files = ["test.ml"]
-	requires = ["webedit_admin"]
 end
 
 begin program "adminCmd"
 	files = ["admin_cmd.ml"]
+	requires = ["webedit_admin"]
+end
+
+begin program "test"
+	files = ["test.ml"]
 	requires = ["webedit_admin"]
 end

@@ -1,6 +1,6 @@
 
 open Global
-
+open Dom_html
 
 (** [all_breakpoints] is the storage for all file's breakpoints **)
 let all_breakpoints = Hashtbl.create 19
@@ -8,6 +8,7 @@ let all_breakpoints = Hashtbl.create 19
 (** [breakpoints] is the list of the current file's breakpoints **)
 let breakpoints = ref []
 
+let forceIndent = ref false
 
 (** [get_best_breakpoint row] returns the best breakpoints above [row] **)
 let get_best_breakpoint row =
@@ -43,7 +44,7 @@ let get_minimum_text rowstart rowend =
   let start = get_best_breakpoint rowstart in
   let col = String.length (Js.to_string (doc##getLine(rowend))) in
   let range =  Ace.range start 0 rowend col in
-  Js.to_string (doc##getTextRange(range))
+    Js.to_string (doc##getTextRange(range))
 
 
 
@@ -80,16 +81,6 @@ let get_indent_size line =
   aux 0
 
 
-(** [get_indent_next_line row] returns the js_string corresponding to the
-    good indentation for the next line of the line [row] **)
-let get_indent_next_line row : Js.js_string Js.t =
-  let text = get_minimum_text row row in
-  let offset = get_best_breakpoint row in
-  let res = List.hd (call_ocp_indent text offset) in
-  Js.string (String.make res ' ')
-
-
-
 (** [replace_indent row n] replaces the indentation's white-spaces for the line
     [row] with [n] white-spaces (for the current editSession) **)
 let replace_indent row n =
@@ -118,15 +109,31 @@ let indent_region row_start row_end  =
      ignore (List.fold_left (fun row n ->
        if row >= row_start then replace_indent row n;
        row - 1) row_end res))
-      
+
+
+(** [get_indent_next_line row] returns the js_string corresponding to the
+    good indentation for the next line of the line [row] **)
+let get_indent_next_line row : Js.js_string Js.t =
+  let _ = if row > 0 && !forceIndent then indent_region 0 (row - 1) in
+  let text = get_minimum_text row row in
+  let offset = get_best_breakpoint row in
+  let res = List.hd (call_ocp_indent text offset) in
+  Js.string (String.make res ' ')
+
+
 (** [notify_change_on_row row] notifies that the [row] has been changed,
     so all breakpoints after this line are no longer valid **)
 let notify_change_on_row row =
   breakpoints := List.filter (fun i -> i < row) !breakpoints
 
+
 let main () =
   (* Events management *)
   let callback_create_file file =
+    let _ = forceIndent :=
+      if Filename.check_suffix file.f_name ".ml" || Filename.check_suffix file.f_name ".mli" then true
+      else false
+    in
     let id = file.f_id in
     if Hashtbl.mem all_breakpoints id then
       Hashtbl.remove all_breakpoints id;
@@ -134,11 +141,14 @@ let main () =
   let callback_open_file (file, _) =
     callback_create_file file in
   let callback_switch_file (old_file, file) =
+    let _ = forceIndent :=
+      if Filename.check_suffix file.f_name ".ml" || Filename.check_suffix file.f_name ".mli" then true
+      else false in 
     begin
       match old_file with
       | None -> ()
       | Some old_file ->
-	Hashtbl.replace all_breakpoints old_file.f_id !breakpoints
+	       Hashtbl.replace all_breakpoints old_file.f_id !breakpoints
     end;
     try breakpoints := Hashtbl.find all_breakpoints file.f_id
     with _ -> failwith "Not_found in callback_switch_file in indent.ml"
@@ -157,5 +167,3 @@ let main () =
     indent_region;
   (Js.Unsafe.coerce Dom_html.window)##indentNotifyChange <-
     Js.wrap_callback notify_change_on_row
-
-

@@ -1,7 +1,9 @@
 open Sqlite3
+(* open CommonConfig *)
 
 let root_directory = "/home/qli/edit.ocamlpro.com/site/4.00.1"
 let data_directory = "/home/qli/edit.ocamlpro.com/site/4.00.1/data"
+
 let opam_pkg_op = ["list"; "install"; "remove"; "show"; "search"]
 
 exception USER_NOT_EXIST of string
@@ -45,11 +47,7 @@ let user_dir_default path =
 		end
 
 let opam_wrapper subcommand =
-(* 	let path_prefix = root_directory / "opam" / "4.00.1" / "bin" in
-	let path_env = Unix.getenv "PATH" in *)
 	let _ = Unix.putenv "OPAMROOT" (root_directory / "opam") in
-(* 	let _ = try ignore(Str.search_forward (Str.regexp path_prefix) path_env 0)
-					with Not_found -> Unix.putenv "PATH" (path_prefix ^ ":" ^ path_env) in *)
 	let command = "opam " ^ subcommand in
 		if Sys.command command <> 0 then raise (OPAM_ERROR command)
 
@@ -131,7 +129,7 @@ let user_change_psw email psw_old psw_new =
 	let db = db_open ~mode:`NO_CREATE "user_data" in
 	let sql = Format.sprintf "UPDATE users SET password = \'%s\'
 	                          WHERE username = \'%s\' and password = \'%s\'"
-	          psw_new_sha username psw_old_sha in
+	          psw_new_sha username psw_old_sha in 
 	let _ = try let return_code = exec db sql in
 	            match return_code with
 	             | Rc.OK -> if changes db <> 1 then
@@ -143,13 +141,10 @@ let user_change_psw email psw_old psw_new =
 
 let user_identify email password_sha =
 	let username = email_to_dirname email in
-(* 	let psw_old_sha = Sha1.to_hex(Sha1.string psw_old) in
-	let psw_new_sha = Sha1.to_hex(Sha1.string psw_new) in *)
 	let _ = Unix.chdir data_directory in
 	let db = db_open ~mode:`NO_CREATE "user_data" in
-	let sql = Format.sprintf "UPDATE users SET password = \'%s\'
-	                          WHERE username = \'%s\' and password = \'%s\'"
-	          password_sha username password_sha in
+	let sql = Format.sprintf "SELECT * FROM users WHERE username=\'%s\' AND password=\'%s\'"
+		username password_sha in
 	let _ = try let return_code = exec db sql in
 	            match return_code with
 	             | Rc.OK -> if changes db <> 1 then
@@ -160,7 +155,28 @@ let user_identify email password_sha =
 	  assert(db_close db)
 
 let user_list () =
-	()
+	let _ = Unix.chdir data_directory in
+	let db = db_open ~mode:`NO_CREATE "user_data" in
+	let _ = Aggregate.create_fun3 db "LIST" ~init:[] ~step:(fun l uid name dir ->
+						match uid, name, dir with
+							| Data.INT i, Data.TEXT n, Data.TEXT d ->
+								let item = Format.sprintf
+									"uid       = %Ld\nusername  = %s\ndirectory = %s\n" i n d in
+									item :: l
+							| _ -> raise (Error "WRONG TYPES TO 'LIST'"))
+						~final: (fun l -> let users = String.concat "\n" (List.rev l) in
+											Data.TEXT ("\n" ^ users)) in
+	let sql = "SELECT LIST(uid, username, directory) FROM users" in
+	let _ = try let return_code = exec db sql ~cb:(fun row _ -> 
+																	match row.(0) with
+																		| Some t -> print_endline t
+																	  | _ -> ()) in
+							match return_code with
+								| Rc.OK -> ()
+								| r -> prerr_endline (Rc.to_string r);
+											 prerr_endline (errmsg db)
+					with Error s -> prerr_endline s in
+		assert(db_close db)
 
 (*****************************************************************************)
 

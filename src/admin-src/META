@@ -1,0 +1,6 @@
+name="admin"
+description="tools for administration data base and ocaml packages on the server side"
+version="0.1"
+depends="sqlite3,unix,sha,str"
+archive(byte)="admintool.cmo"
+archive(native)="admintool.cmx"

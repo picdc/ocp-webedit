@@ -16,20 +16,6 @@ let make_opam_speclist () =
 	["-init", Unit opam_initial, " Install and initial opam under the root directory of server";
 	 "-pkg", Symbol (pkg_op, symbol_func),
 	 	Printf.sprintf " Package operation done by opam of server, allowed: %s" (String.concat " " pkg_op)]
-(*
-  let make_db_speclist () =
-	let user_op = get_user_op () in
-	let op_name = fst (List.split user_op) in
-	let symbol_func = function
-		| "create" -> 
-		| "delete" ->
-		| "change_psw" -> 
-	in
-	["-init", Unit db_initial, " Contruct the data base for users information";
-	 "-user", Symbol (op_name, symbol_func),
-	   Printf.sprintf " User data management, allowed: %s" (String.concat " " op_name);
-	 "-list",Unit user_list, " List all the users in the data base (username [, name ], directory)"]
- *)
 
 let make_db_speclist () =
 	let l = Array.length argv_array in
@@ -65,9 +51,9 @@ let print_my_help () =
 	print_endline "";
 	print_endline "*****************************************************************";
 	print_endline "*   This tool helps you with USER DATA MANAGEMENT, please run   *";
-	print_endline "*                  admin_cmd database -help                     *";
+	print_endline "*                  admincmd database -help                     *";
 	print_endline "* and also helps you with OCAML PACKAGES MANAGEMENT, please run *";
-	print_endline "*                    admin_cmd opam -help                       *";
+	print_endline "*                    admincmd opam -help                       *";
 	print_endline "*****************************************************************";
 	print_endline ""
 

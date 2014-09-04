@@ -1096,7 +1096,7 @@ let prompt_import_library ?(project=None) () =
     | None -> projects @ libraries
     | Some _ -> libraries in
   let callback res =
-    let library_to_import = List.assoc "library" res in
+    let library_to_import = ((List.assoc "library" res) ^ ".cma") in
     let project_to_import = match project with
       | Some p -> p
       | None ->
