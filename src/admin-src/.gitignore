@@ -1,4 +1,3 @@
 _obuild/*
 ocp-build.root*
 test.ml
-mklib.sh
