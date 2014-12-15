@@ -20,7 +20,7 @@ CONFIGBYTE= ./ocpwe-config.byte
 JSFLAGS= -pretty -noinline
 JSINCLUDES= -I $(DIR_TOPLEVEL)/cmicomp -I $(COMPILER_LIBS) -I $(JS_COMPILER_LIBS) -I $(JS_OF_OCAML)
 
-all: server editor html
+all: admin server editor html
 
 html: www/index.html
 
@@ -80,6 +80,11 @@ toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
 	`ocamlc -where`/expunge $(TOPLEVEL).byte toplevel_expunged.byte \
 		`cat modules.list`
 	ls -l toplevel_expunged.byte
+
+### Rules to build the administrator tool
+admin:
+	ocp-build webedit_adminCmd
+	ocp-build install webedit_admin webedit_adminCmd
 
 ### Rules to build the server
 server:

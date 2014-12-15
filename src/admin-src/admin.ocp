@@ -4,7 +4,7 @@ begin library "webedit_admin"
 	requires = ["sqlite3" "unix" "sha" "str"]
 end
 
-begin program "adminCmd"
+begin program "webedit_adminCmd"
 	files = ["admin_cmd.ml"]
 	requires = ["webedit_admin"]
 end
