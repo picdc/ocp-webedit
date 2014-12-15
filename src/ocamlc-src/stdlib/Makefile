@@ -67,7 +67,7 @@ $(OTHERS:.cmo=.cmx) std_exit.cmx: pervasives.cmx
 $(OTHERS:.cmo=.p.cmx) std_exit.p.cmx: pervasives.cmx
 
 
-include .depend
+-include .depend
 
 clean:
 	rm -rf *.cm[iaot]

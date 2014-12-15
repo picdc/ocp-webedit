@@ -217,7 +217,7 @@ let create_default_ocpbuildfile path ?name () =
     | None -> "hello_world", "\"hello_world.ml\""
     | Some name -> name, "" in
   let out = open_out (Filename.concat path default_ocpbuildfile_name) in
-  let content = 
+  let content =
     Format.sprintf "begin program \"%s\"\n\tfiles = [%s]\n\trequires = []\nend"
     objective file in
     output_string out content;
@@ -227,7 +227,7 @@ let parse_output_function content =
   let from = String.index content '\n' in
   let pos_start = String.index_from content from '=' in
   let pos_end = String.index_from content from '.' in
-    String.sub content (pos_start+1) (pos_end-pos_start-1) 
+    String.sub content (pos_start+1) (pos_end-pos_start-1)
 
 (** [parse_conf_function content]:
     parse the content between the '=' and '\n' of the first line of
@@ -264,7 +264,7 @@ let update_ocpfiles_function path =
     close_in inc;
   let content = Buffer.contents buf in
   let files = Sys.readdir path in
-  let ocpfile = 
+  let ocpfile =
     List.find (fun file -> Filename.check_suffix file ".ocp") (Array.to_list files) in
   let output_name = parse_output_function content in
   let sources, libraries = parse_files_function content in
@@ -303,7 +303,7 @@ let create_workspace user =
 
 let create_buildfile path output files =
   let out = open_out (Filename.concat path buildfile_basename) in
-  let sources = List.filter (fun file -> 
+  let sources = List.filter (fun file ->
     (Filename.check_suffix file ".ml") || (Filename.check_suffix file ".mli")) files in
   let sources = Format.sprintf "files=%s" (String.concat "," sources) in
   let output = Format.sprintf "output=%s" output in
@@ -442,6 +442,7 @@ let send_cookies cookies (cgi: Netcgi.cgi_activation) =
   cgi#out_channel#output_string "Authentified successfully";
   cgi#out_channel#commit_work ()
 
+(* Dead code, to remove later *)
 let parse_persona_response r =
   let open Yojson.Basic in
   let res = from_string r in
@@ -470,15 +471,16 @@ let parse_persona_response r =
   if not (user_exists user) then create_workspace user;
   user*)
 let login_function email password =
-  let identified = ref true in
-  let _ =
-    try Admintool.user_identify email password 
+  (* let identified = ref true in *)
+  let identified =
+    try Admintool.user_identify email password ; true
     with Admintool.SELECT_USER_FAIL (email, psw_sha) -> begin
-      identified := false;
-      log ("select fail detected: " ^ email ^ " " ^ psw_sha)
+      (* identified := false; *)
+      log ("select fail detected: " ^ email ^ " " ^ psw_sha);
+      false
     end in
-  if !identified && not (user_exists email) then create_workspace email;
-  !identified
+  if identified && not (user_exists email) then create_workspace email;
+  identified
 
 (* let signup_function email password name =
   AdminLib.create_user email password name;
@@ -705,9 +707,9 @@ let read_to_string path =
     Buffer.contents buf, len
 
 let infer_grun user_agent =
-  let (/) lhs rhs = Filename.concat lhs rhs in 
+  let (/) lhs rhs = Filename.concat lhs rhs in
     www_directory / "ocamlgrun" / (
-      match user_agent with 
+      match user_agent with
         | s when Str.string_match (Str.regexp ".*Mac") s 0 -> "ocamlgrun-macosx10.9-x86_64.bin"
         | s when Str.string_match (Str.regexp ".*\\(Linux\\|X11\\)") s 0 -> "ocamlgrun-linux-debian-x86.bin"
         | s when Str.string_match (Str.regexp ".*Windows NT 6.1") s 0 -> "ocamlgrun-win7-amd64.exe"
@@ -720,7 +722,7 @@ let project_compile_function path obj user_agent =
     Unix.chdir path;
 
     let path_to_prefix = root_directory / "opam/4.00.1/bin:" in
-      if not (Str.string_match (Str.regexp path_to_prefix) env_path 0) then 
+      if not (Str.string_match (Str.regexp path_to_prefix) env_path 0) then
         Unix.putenv "PATH" (path_to_prefix ^ env_path);
 
       let code = ref 0 in
@@ -728,7 +730,7 @@ let project_compile_function path obj user_agent =
       let _ =
         if Sys.file_exists output then Sys.remove output;
         code := ocp_build path (if Sys.file_exists (path / "ocp-build.root") then "build" else "-init") in
-        
+
       let output_ocpbuild, len = read_to_string output in
       let start = try Str.search_backward (Str.regexp "\n\n") output_ocpbuild (len - 3)
                   with Not_found -> -1 in
@@ -737,18 +739,18 @@ let project_compile_function path obj user_agent =
 
       let grun_path = infer_grun user_agent in
       let grun = open_in_bin grun_path in
-      let grun_len = 
+      let grun_len =
         if (* (Filename.basename grun_path) = "ocamlgrun" *)true then 0 else in_channel_length grun in
 
       let bytecode_path = path / "_obuild" / (Filename.chop_extension obj) / obj in
-      let bytecode = open_in_bin bytecode_path in 
+      let bytecode = open_in_bin bytecode_path in
       let bytecode_len = in_channel_length bytecode in
 
       let buf = Buffer.create (grun_len + bytecode_len) in
         Buffer.add_channel buf grun grun_len;
         Buffer.add_channel buf bytecode bytecode_len;
         close_in grun; close_in bytecode;
-     
+
         Unix.chdir original_path;
         Unix.putenv "PATH" env_path;
         let result = {  cr_path = (Str.global_replace (Str.regexp (data_directory^Filename.dir_sep)) "" path);
@@ -779,7 +781,7 @@ let install_library_function path lib =
         Buffer.add_channel buf inc (in_channel_length inc); close_in inc;
         Str.split (Str.regexp "\n") (Buffer.contents buf)
     else [] in
-    let new_list = if (List.mem lib lib_list) then lib_list else lib :: lib_list in 
+    let new_list = if (List.mem lib lib_list) then lib_list else lib :: lib_list in
     let out = open_out conf_file in
       output_string out (String.concat "\n" new_list); close_out out
 
@@ -800,10 +802,12 @@ let login_service =
 	try
           let uid = verify_argument cgi "email" in
           let psw = verify_argument cgi "psw" in
-            if (login_function uid psw) then
-              let u = Nethttp.Cookie.make "user" uid in
-              let p = Nethttp.Cookie.make "key" psw in
-                send_cookies [u; p] cgi
+          if (login_function uid psw) then
+            let u = Nethttp.Cookie.make "user" uid in
+            let p = Nethttp.Cookie.make "key" psw in
+            send_cookies [u; p] cgi
+          else
+            raise (Request_failed "Login error")
 	with e -> print_exception e cgi
       ); }
 
@@ -821,9 +825,9 @@ let login_service =
             with
               | AdminLib.Email_WrongFormat _ ->
                   answer cgi "wformat"; success := false
-              | AdminLib.Email_AlreadyExist _ -> 
+              | AdminLib.Email_AlreadyExist _ ->
                   answer cgi "exist"; success := false in
-            if !success then 
+            if !success then
               let u = Nethttp.Cookie.make "user" email in
               let k = Nethttp.Cookie.make "key" psw in
                 send_cookies [u; k] cgi
@@ -1027,7 +1031,7 @@ let save_conf_service =
           let path = verify_path cgi in
           let name = verify_argument cgi "name" in
 	  let content = verify_argument cgi "content" in
-	  save_conf_function path name content; 
+	  save_conf_function path name content;
     if name = ".webuild" then update_ocpfiles_function path;
 	  answer cgi "Saved"
 	with e -> print_exception e cgi

@@ -2,6 +2,7 @@
 begin program "main-src"
 
   has_asm = false
+  bytecomp = ["-g"]
   files = [
     "javaScript.ml"
     "jQuery.ml"

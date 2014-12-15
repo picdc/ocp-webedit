@@ -1,11 +1,12 @@
 OCAMLDEP=ocamldep
 
-INCLUDES=  -I ../../_obuild/common
+BDIR= ../../_obuild
+INCLUDES=  -I $(BDIR)/common -I $(BDIR)/webedit_admin -I $(BDIR)/webedit_adminCmd
 CAMLFLAGS= -thread -w @a-29 $(INCLUDES)
 CAMLOPTFLAGS= $(CAMLFLAGS) -inline 10000
 CAMLLIBS= unix.cma
 CFLAGS= -arch x86_64 -O3 -Wall -Wextra
-PKGS= -package threads,pcre,netplex,netcgi2,nethttpd,shell,netclient,ssl,equeue-ssl,yojson,netstring,sqlite3,sha,webedit_admin
+PKGS= -package threads,pcre,netplex,netcgi2,nethttpd,shell,netclient,ssl,equeue-ssl,yojson,netstring,sqlite3,sha
 
 SRC= serverConfig.ml serverMain.ml
 OBJ= $(SRC:.ml=.cmx)
@@ -18,7 +19,8 @@ all: $(EXEC)
 
 
 $(EXEC): $(OBJ)
-	ocamlfind ocamlopt $(CAMLOPTFLAGS) $(PKGS) -linkpkg $(INCLUDES) common.cmxa $(OBJ) -o $(EXEC)
+	ocamlfind ocamlopt $(CAMLOPTFLAGS) $(PKGS) -linkpkg $(INCLUDES) \
+common.cmxa webedit_admin.cmxa $(OBJ) -o $(EXEC)
 
 .mli.cmi:
 	ocamlfind ocamlc $(CAMLFLAGS) $(PKGS) -c $<

@@ -17,7 +17,7 @@ TOPLEVEL= _obuild/$(PKG_TOPLEVEL)/$(PKG_TOPLEVEL)
 
 CONFIGBYTE= ./ocpwe-config.byte
 
-JSFLAGS= -pretty -noinline
+JSFLAGS= --pretty --noinline
 JSINCLUDES= -I $(DIR_TOPLEVEL)/cmicomp -I $(COMPILER_LIBS) -I $(JS_COMPILER_LIBS) -I $(JS_OF_OCAML)
 
 all: admin server editor html
@@ -84,10 +84,10 @@ toplevel_expunged.byte: $(TOPLEVEL).byte modules.list
 ### Rules to build the administrator tool
 admin:
 	ocp-build webedit_adminCmd
-	ocp-build install webedit_admin webedit_adminCmd
+	ocp-build install webedit_adminCmd
 
 ### Rules to build the server
-server:
+server: admin
 	ocp-build build common
 	$(MAKE) -C src/server-src
 
@@ -143,7 +143,7 @@ clean:
 	rm -f ocpwe-config.byte .ocp-we.conf
 	rm -rf www/main.js
 	$(MAKE) -C $(DIR_OCAMLC) clean
-	$(MAKE) -C server clean
+	$(MAKE) -C src/server-src clean
 	$(MAKE) -C build clean
 
 

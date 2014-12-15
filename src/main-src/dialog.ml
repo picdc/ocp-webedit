@@ -1090,7 +1090,7 @@ let prompt_import_library ?(project=None) () =
   let libraries =
     [ dialogInput_select ~name:"library" ~label:"Choose Library" ~values () ] in
   let values = List.map (fun p -> p.p_name) (Filemanager.get_projects ()) in
-  let projects = 
+  let projects =
     [ dialogInput_select ~name:"project" ~label:"Choose Project" ~values () ] in
   let inputs = match project with
     | None -> projects @ libraries
@@ -1428,15 +1428,18 @@ module LoginFail = MakeModal(struct
 let string_to_sha1 str =
   let crypto = Js.Unsafe.variable "CryptoJS" in
   let arg = Js.Unsafe.inject (Js.string str) in
-  let hash = Js.Unsafe.meth_call crypto "SHA1" [| arg |] in
-    Js.to_string hash
+  let hash_object = Js.Unsafe.meth_call crypto "SHA1" [| arg |] in
+  let enc = crypto##enc##_Hex in
+  let hash_string =
+    Js.Unsafe.meth_call hash_object "toString" [| enc |] in
+  Js.to_string hash_string
 
 module Login (Callback: sig
                 val success: string -> unit
                 val failure: exn -> unit
               end) = struct
   let modalname = "login"
-  
+
   let username =
     let username = get_element_by_id
         (Printf.sprintf "modal-%s-email-input" modalname) in
@@ -1456,10 +1459,10 @@ module Login (Callback: sig
 
   let () =
     button##onclick <- handler (fun _ ->
-      let username = Js.to_string username##value in
-      let psw = string_to_sha1 (Js.to_string psw##value) in
-      (* let failmsg = "Please check your login email address and password.\n
-                     If you don't have an account, signup first." in *)
+        let username = Js.to_string username##value in
+        let psw = string_to_sha1 (Js.to_string psw##value) in
+        (* let failmsg = "Please check your login email address and password.\n
+                       If you don't have an account, signup first." in *)
         check_no_empty "email" username;
         check_no_empty "password" psw;
         let success str = hide (); success str in
@@ -1468,9 +1471,9 @@ module Login (Callback: sig
           LoginFail.show ();
           failure exn in
         let msg = Printf.sprintf "email=%s&psw=%s" username psw in
-          Request.pull_request ~success ~failure ~url:"login" ~msg ();
-          Js._false
-    )
+        Request.pull_request ~success ~failure ~url:"login" ~msg ();
+        Js._false
+      )
 end
 
 let prompt_login ~success ?(failure=(fun _ -> ())) () =
